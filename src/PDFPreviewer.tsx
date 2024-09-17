@@ -1,6 +1,6 @@
 // @ts-expect-error - This line imports a module from 'pdfjs-dist' package which lacks TypeScript typings.
 // eslint-disable-next-line import/no-extraneous-dependencies
-import pdfWorkerSource from 'pdfjs-dist/legacy/build/pdf.worker';
+import pdfWorkerSource from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs';
 import React, {memo, useCallback, useLayoutEffect, useRef, useState} from 'react';
 import type {CSSProperties, ReactNode} from 'react';
 import times from 'lodash/times';
@@ -67,6 +67,9 @@ const defaultProps = {
 };
 
 pdfjs.GlobalWorkerOptions.workerSrc = URL.createObjectURL(new Blob([pdfWorkerSource], {type: 'text/javascript'}));
+// pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.6.82/legacy/build/pdf.worker.min.mjs`;
+// pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
+
 
 function PDFPreviewer({
     file,

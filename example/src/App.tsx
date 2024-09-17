@@ -11,13 +11,14 @@ const pdfPreviewerContainerStyle: CSSProperties = {
 
 function App() {
     const [file, setFile] = useState<string | null>(null);
+    const [dimensions, setDimensions] = useState({ width: '100%', height: '100%' });
 
     return (
         <main className="container">
             <h1 className="title">Hello, I am {ReactFastPDF.PackageName}!</h1>
 
             {file ? (
-                <>
+                <div style={{ width: dimensions.width, height: dimensions.height }}>
                     <button
                         className="button button_back"
                         type="button"
@@ -32,7 +33,7 @@ function App() {
                         isSmallScreen={false}
                         containerStyle={pdfPreviewerContainerStyle}
                     />
-                </>
+                </div>
             ) : (
                 <>
                     <h3>Please choose a file for previewing:</h3>
@@ -41,7 +42,10 @@ function App() {
                         <button
                             className="button"
                             type="button"
-                            onClick={() => setFile('example.pdf')}
+                                onClick={() => {
+                                    setDimensions({ width: '100%', height: '100%' })
+                                    setFile('example.pdf');
+                                }}
                         >
                             example.pdf
                         </button>
@@ -49,7 +53,26 @@ function App() {
                         <button
                             className="button"
                             type="button"
-                            onClick={() => setFile('example_protected.pdf')}
+                                onClick={() => {
+                                    setDimensions({ width: '100%', height: '100%' })
+                                    setFile('example.pdf');
+
+                                    setTimeout(() => {
+                                        setDimensions({ width: '0', height: '0' })
+                                        setFile(null)
+                                    }, 1500)
+                                }}
+                        >
+                            Mount, unmount, hide with dimension
+                        </button>
+
+                        <button
+                            className="button"
+                            type="button"
+                            onClick={() => {
+                                setDimensions({ width: '100%', height: '100%' })
+                                setFile('example_protected.pdf')
+                            }}
                         >
                             example_protected.pdf (Password: 123456)
                         </button>
